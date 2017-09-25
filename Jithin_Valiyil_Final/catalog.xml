@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:8080/Jithin_Valiyil_Final_SOAP/CustomerWebService?wsdl" uri="src/conf/xml-resources/web-service-references/CustomerWebService/wsdl/localhost_8080/Jithin_Valiyil_Final_SOAP/CustomerWebService.wsdl"/>
+    <system systemId="http://localhost:8080/Jithin_Valiyil_Final_SOAP/CustomerWebService?xsd=1" uri="src/conf/xml-resources/web-service-references/CustomerWebService/wsdl/localhost_8080/Jithin_Valiyil_Final_SOAP/CustomerWebService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/Jithin_Valiyil_Final_SOAP/CustomerWebService?xsd=2" uri="src/conf/xml-resources/web-service-references/CustomerWebService/wsdl/localhost_8080/Jithin_Valiyil_Final_SOAP/CustomerWebService.xsd_2.xsd"/>
+</catalog>

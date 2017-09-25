@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"> 
+    <h:head>
+        <title>Customer Order</title>
+    </h:head>
+    <h:body>
+        <h:form id="regForm">
+            <p:messages autoUpdate="false"/>
+            <p:panelGrid columns="2" id="customerPanel">
+                 <f:facet name="header" >
+                    Customer Information
+                 </f:facet>
+               
+                
+                <p:outputLabel value="Enter First Name"/>
+                <p:inputText id="fname" value="#{customerRegistration.firstName}" />
+            
+                <p:outputLabel value="Enter Last Name"/>
+                <p:inputText id="lname" value="#{customerRegistration.lastName}" />
+            
+                <p:outputLabel value="Enter Address"/>
+                <p:inputText id="address" value="#{customerRegistration.address}" />
+
+                <p:outputLabel value="Enter City"/>
+                <p:inputText id="city" value="#{customerRegistration.city}" />
+
+                <p:outputLabel value="Enter Zipcode"/>
+                <p:inputText id="zipcode" value="#{customerRegistration.zipcode}" converter="javax.faces.Integer" converterMessage="Invalid zip code; Must be numbers"/>
+                
+                <p:outputLabel value="Select State"/>
+                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" >
+                    <p:selectOneListbox id="state" value="#{customerRegistration.state}" label="Select States" >
+                        <f:selectItems value="#{customerRegistration.states}" /> 
+                    </p:selectOneListbox>
+                </h:panelGrid>
+                
+                <p:outputLabel value="Select Product"/>
+                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" >
+                    <p:selectOneListbox id="product" value="#{customerRegistration.product}" label="Select Product" required="true" requiredMessage="Must pick a product" >
+                        <f:selectItems value="#{customerRegistration.products}" /> 
+                    </p:selectOneListbox>
+                </h:panelGrid>
+                
+                <p:outputLabel value="Quantity"/>
+                <p:inputText id="quantity" value="#{customerRegistration.quantity}" converter="javax.faces.Integer" required="true" converterMessage="Must be a number" validatorMessage="Quantity cannot be greater than 5" >
+                    <f:validateLongRange minimum="0" maximum="5"/>
+                </p:inputText>
+                
+                <p:outputLabel value="Total Cost"/>
+                <p:inputText id="totalcost" value="#{customerRegistration.cost}" disabled="true"/>
+                
+                <p:outputLabel value="Payment Type"/>
+                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                    <p:selectOneRadio id="paymentType" value="#{customerRegistration.paymentType}">
+                        <f:selectItem itemLabel="Credit" itemValue="Credit" />
+                        <f:selectItem itemLabel="Debit" itemValue="Debit" />
+                    </p:selectOneRadio>
+                </h:panelGrid>
+                
+                <p:outputLabel value="Account Number"/>
+                <p:inputText id="accountNumber" value="#{customerRegistration.acct}" converter="javax.faces.Integer" converterMessage="Invalid zip code; Must be numbers"/>
+  
+                
+                <p:panelGrid columns="1">
+                    <p:commandButton value="Submit" image="ui-icon-check" ajax="false">
+                        <f:actionListener binding="#{customerRegistration.registerCustomer()}"/>
+                        <f:actionListener binding="#{customerRegistration.cancelRegister()}"/>
+                    </p:commandButton>
+                    
+                    <p:commandButton value="Cancel" image="ui-icon-check" ajax="false" actionListener="#{customerRegistration.cancelRegister()}" immediate="true"/>
+                    
+                </p:panelGrid>
+            </p:panelGrid>
+            
+            <p:panel id="regTable">
+                <p:dataTable id="dataTable" var="customer" paginator="true" rows="5" selectionMode="single"
+                             value="#{customerRegistration.dataModel}" rowKey="#{customer.id}">
+                
+                    <f:facet name="header">  
+                        Customers 
+                    </f:facet>
+                    <p:ajax listener="#{customerRegistration.processCustomerSelection}" event="rowSelect" update=":regForm" />
+                    <p:ajax listener="#{customerRegistration.onRowUnselect}" event="rowUnselect" update=":regForm"/>  
+
+                    <p:column sortBy="firstName" headerText="FirstName">  
+                        <h:outputText value="#{customer.getBillAddress().getFirstName()}" />  
+                    </p:column>  
+  
+                    <p:column sortBy="lastName" headerText="LastName">  
+                        <h:outputText value="#{customer.getBillAddress().getLastName()}" />  
+                    </p:column>  
+  
+                    <p:column sortBy="address" headerText="Address" >  
+                        <h:outputText value="#{customer.getBillAddress().getStreetAddress()}" />  
+                    </p:column>  
+  
+                    <p:column sortBy="product" headerText="Product">  
+                        <h:outputText value="#{customer.getOrder().getProduct()}" />  
+                    </p:column>  
+                    
+                    <p:column sortBy="quantity" headerText="Quantity">  
+                        <h:outputText value="#{customer.getOrder().getQuantity()}" />  
+                    </p:column> 
+                    
+                </p:dataTable>
+            </p:panel>
+            
+            
+            
+            
+        </h:form>
+    </h:body>
+</html>
+
